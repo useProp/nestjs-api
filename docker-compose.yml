@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  postgres:
+    container_name: 'median-pg'
+    image: postgres:latest
+    env_file:
+      - docker.env
+    ports:
+      - '5432:5432'
+    volumes:
+      - /data/postgres:/data/postgres
