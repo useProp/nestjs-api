@@ -1,7 +1,15 @@
-import { Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
 import { PrismaService } from '../prisma/prisma.service';
+import { Article } from '@prisma/client';
+import { ArticleEntity } from './entities/article.entity';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class ArticlesService {
@@ -18,7 +26,7 @@ export class ArticlesService {
     return this.prisma.article.findMany({ where: { published: false } });
   }
 
-  findOne(id: number) {
+  async findOne(id: number): Promise<Article> {
     return this.prisma.article.findUnique({ where: { id } });
   }
 
